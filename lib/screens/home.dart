@@ -15,7 +15,7 @@ import '../routes/dialogRoutes/filter_route.dart';
 import '../routes/dialogRoutes/search_route.dart';
 import '../services/database_service.dart';
 import '../tabScreens/crocs.dart';
-import '../tabScreens/sneakers.dart';
+import '../tabScreens/footwear.dart';
 import '../tabScreens/all_luchi.dart';
 import '../tabScreens/luchi_material.dart';
 import '../tabScreens/testtab.dart';
@@ -177,7 +177,7 @@ class _HomeState extends State<Home> {
           ],
         ),
         body: DefaultTabController(
-          length: 5,
+          length: 4,
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.5),
@@ -189,7 +189,7 @@ class _HomeState extends State<Home> {
                     print('sth:${size.height}, ${size.width}');
                   },
                   child: Row(children: [
-                    Text('$greeting, ',
+                    Text('Hello ',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold)),
                     FutureBuilder<String>(
@@ -207,17 +207,17 @@ class _HomeState extends State<Home> {
                           return Text('Error: ${snapshot.error}');
                         } else {
                           return Text(
-                            '${snapshot.data}',
-                            style: TextStyle(color: Colors.grey[900],
+                            '${snapshot.data},',
+                            style: TextStyle(
+                                color: Colors.grey[900],
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold),
                           );
                         }
                       },
                     ),
-                   
                   ])),
-              Text('Explore and Find Your Match',
+              Text('What are you buying today?',
                   style: TextStyle(fontSize: 13.5, color: Colors.grey[600])),
               const SizedBox(
                 height: 15,
@@ -372,17 +372,6 @@ class _MyTabBarState extends State<MyTabBar>
                   borderColor: currentIndex == 3
                       ? Colors.grey[900]!
                       : Colors.grey[600]!),
-              MyTabBarContainer(
-                  icon: Icons.favorite_outline_rounded,
-                  textDecoration: currentIndex == 4,
-                  tabName: 'Test Tab ',
-                  color: currentIndex == 4
-                      ? Colors.grey[900]!
-                      : Colors.transparent,
-                  textColor:
-                      currentIndex == 4 ? Colors.grey[100]! : Colors.grey[900]!,
-                  borderColor:
-                      currentIndex == 4 ? Colors.grey[900]! : Colors.grey[600]!)
             ]),
         const SizedBox(height: 15),
         Expanded(
@@ -392,7 +381,7 @@ class _MyTabBarState extends State<MyTabBar>
           Watches(),
           Sneakers(),
           //Crocs(),
-          TestTab()
+          //TestTab()
         ]))
       ],
     );

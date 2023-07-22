@@ -19,6 +19,7 @@ class MyRemoveAllContainer extends StatelessWidget {
     String userID = currentUser.uid;
     return userID;
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -28,11 +29,36 @@ class MyRemoveAllContainer extends StatelessWidget {
         .doc(_getCurrentUserId());
     final CollectionReference wishlistCollection =
         wishlistDocumentReference.collection('user_wishlist_item');
+    final CollectionReference ready2wearCollection =
+        FirebaseFirestore.instance.collection('watchesCatalaog');
+    final CollectionReference ankaraMaterialCollection =
+        FirebaseFirestore.instance.collection('luchiMaterialsCatalog');
+    final CollectionReference watchesCollection =
+        FirebaseFirestore.instance.collection('watchesCatalogFr');
+    final CollectionReference footwearCollection =
+        FirebaseFirestore.instance.collection('footwearCatalog');
 
     return GestureDetector(
-        onTap: () {
-          DatabaseService(uID: _getCurrentUserId()).deleteAllWishlistItems(wishlistCollection);
+        onTap: () async {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Center(
+                    child: CircularProgressIndicator(
+                        color: Colors.deepPurple[600]));
+              });
+          DatabaseService(uID: _getCurrentUserId())
+              .deleteAllWishlistItems(wishlistCollection);
           Provider.of<Model>(context, listen: false).removeAllSavedItems();
+          await DatabaseService(uID: _getCurrentUserId())
+              .updateAllProductSavedStatusToFalse(ready2wearCollection);
+          await DatabaseService(uID: _getCurrentUserId())
+              .updateAllProductSavedStatusToFalse(ankaraMaterialCollection);
+          await DatabaseService(uID: _getCurrentUserId())
+              .updateAllProductSavedStatusToFalse(watchesCollection);
+          await DatabaseService(uID: _getCurrentUserId())
+              .updateAllProductSavedStatusToFalse(footwearCollection);
+
           Flushbar(
             flushbarPosition: FlushbarPosition.TOP,
             backgroundColor: Colors.red[400]!,
@@ -41,9 +67,9 @@ class MyRemoveAllContainer extends StatelessWidget {
             icon: Icon(Icons.check_box_rounded, color: Colors.white),
             messageText: Text("All Items successufully deleted.",
                 style: GoogleFonts.openSans(color: Colors.white)),
-          )..show(context).then((_) => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: ((context) => MyBottomBar()))));
-          ;
+          )..show(context).then((value) => Navigator.pop(context)).then((_) =>
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: ((context) => MyBottomBar()))));
         },
         child: Container(
             //width: size.width * 0.35,
@@ -105,7 +131,6 @@ class MyRemoveAllContainer2 extends StatelessWidget {
               context, MaterialPageRoute(builder: ((context) => Cart()))));
         },
         child: Container(
-            
             padding:
                 const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
             decoration: BoxDecoration(

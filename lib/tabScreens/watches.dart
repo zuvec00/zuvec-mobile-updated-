@@ -79,6 +79,7 @@ class Watches extends StatelessWidget {
                                       builder: ((context) => ProductDetail(
                                           pID: 'watches',
                                           index: index,
+                                          productCollectionReference: watchesCatalog,
                                           ratingCollection: ratingCollection,
                                           productVariants: streamSnapshot.data!
                                               .docs[index]['Product variation'],
@@ -101,6 +102,7 @@ class Watches extends StatelessWidget {
                             child: MyProductCard(
                               pID: 'watches',
                               index: index,
+                              productCollectionReference: watchesCatalog,
                               ratingCollection: ratingCollection,
                               productName: streamSnapshot.data!.docs[index]
                                   ['Product name'],

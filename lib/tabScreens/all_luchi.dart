@@ -94,12 +94,15 @@ class Luchi extends StatelessWidget {
                                             productPrice: streamSnapshot.data!
                                                 .docs[index]['Product price'],
                                             ratingCollection: ratingCollection,
+                                            productCollectionReference: watchesCatalog,
+      
                                           ))));
                             },
                             child: MyProductCard(
                               pID: 'ready_2_wear',
                               index: index,
                               ratingCollection: ratingCollection,
+                              productCollectionReference: watchesCatalog,
                               backgroundColor: getRandomColor(),
                               productName: streamSnapshot.data!.docs[index]
                                   ['Product name'],

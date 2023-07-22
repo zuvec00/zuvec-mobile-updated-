@@ -40,6 +40,15 @@ class MySavedItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    final CollectionReference ready2wearCollection =
+        FirebaseFirestore.instance.collection('watchesCatalaog');
+    final CollectionReference ankaraMaterialCollection =
+        FirebaseFirestore.instance.collection('luchiMaterialsCatalog');
+    final CollectionReference watchesCollection =
+        FirebaseFirestore.instance.collection('watchesCatalogFr');
+    final CollectionReference footwearCollection =
+        FirebaseFirestore.instance.collection('footwearCatalog');
     final DocumentReference wishlistDocRef = FirebaseFirestore.instance
         .collection('usersWishlistProducts')
         .doc(_getCurrentUserId());
@@ -56,9 +65,25 @@ class MySavedItems extends StatelessWidget {
     return Slidable(
       endActionPane: ActionPane(motion: StretchMotion(), children: [
         SlidableAction(
-          onPressed: (context) {
+          onPressed: (context) async {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                          color: Colors.deepPurple[600]));
+                });
+            await DatabaseService(uID: _getCurrentUserId()).savedStateHandler(
+                ready2wearCollection, productImagePath, false);
+            await DatabaseService(uID: _getCurrentUserId()).savedStateHandler(
+                ankaraMaterialCollection, productImagePath, false);
+            await DatabaseService(uID: _getCurrentUserId())
+                .savedStateHandler(watchesCollection, productImagePath, false);
+            await DatabaseService(uID: _getCurrentUserId())
+                .savedStateHandler(footwearCollection, productImagePath, false);
             DatabaseService(uID: _getCurrentUserId())
                 .deleteWishlistItem(wishlistCollection, productID!);
+            Navigator.pop(context);
             //deletes item
             Provider.of<Model>(context, listen: false).removeSavedItem(index!);
 

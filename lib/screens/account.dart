@@ -13,7 +13,11 @@ class Account extends StatelessWidget {
     ['Preferences', '/preferences', Icons.menu],
     ['Contact Support', '/contactSupport', Icons.support_agent_outlined],
     ['Rate App', '/appRating', Icons.star_half_outlined],
-    
+    [
+      'Support Developer',
+      '/supportDeveloper',
+      FluentSystemIcons.ic_fluent_gift_regular
+    ],
   ];
 
   void signOut() {
@@ -62,8 +66,10 @@ class Account extends StatelessWidget {
                   },
                   child: Text('Tap here to follow us now',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight:FontWeight.bold,
-                          color: Colors.deepPurple[600], fontSize: 13.5))),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple[600],
+                          fontSize: 13.5))),
               SizedBox(
                 height: 15,
               )

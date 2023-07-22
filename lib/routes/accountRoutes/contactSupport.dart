@@ -71,7 +71,7 @@ class _ContactSupportState extends State<ContactSupport> {
                     Text(
                       'We\'re here to help you with any issue. Please describe your problem and we\'ll get back to you as soon as possible. Thank you for choosing our service.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
                     const SizedBox(
                       height: 20,

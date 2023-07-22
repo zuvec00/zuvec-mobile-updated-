@@ -12,6 +12,7 @@ import '../../provider/model.dart';
 class MyProductCard extends StatefulWidget {
   final String pID;
   final int index;
+  final CollectionReference productCollectionReference;
   final CollectionReference ratingCollection;
   final String productName;
   final String? productDescription;
@@ -37,6 +38,7 @@ class MyProductCard extends StatefulWidget {
     this.productVariants,
     required this.ratingCollection,
     required this.pID,
+    required this.productCollectionReference,
   });
 
   @override
@@ -128,6 +130,8 @@ class _MyProductCardState extends State<MyProductCard>
                             return ProductDetail(
                                 pID: widget.pID,
                                 backgroundColor: widget.backgroundColor,
+                                productCollectionReference:
+                                    widget.productCollectionReference,
                                 ratingCollection: widget.ratingCollection,
                                 productVariants: widget.productVariants,
                                 productListImages: widget.productListImages,
@@ -234,6 +238,8 @@ class _MyProductCardState extends State<MyProductCard>
                                         pID: widget.pID,
                                         ratingCollection:
                                             widget.ratingCollection,
+                                        productCollectionReference:
+                                            widget.productCollectionReference,
                                         productListImages:
                                             widget.productListImages,
                                         productVariants: widget.productVariants,

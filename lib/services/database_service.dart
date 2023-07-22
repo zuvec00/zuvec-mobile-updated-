@@ -23,6 +23,8 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('usersAddresses');
   CollectionReference orderSubCollection =
       FirebaseFirestore.instance.collection('userOrders');
+  CollectionReference donationCollection =
+      FirebaseFirestore.instance.collection('donations');
 
   Future updateUserData(String tokenID, String firstName, String lastName,
       String phoneNo, String emailID) async {
@@ -193,6 +195,59 @@ class DatabaseService {
     addWishlistItem('0', '', 'productName', 0.0, '1000', subCollectionRef);
   }
 
+  Future<bool> getSavedState(
+      CollectionReference collectionRef, String productImageAddress) async {
+    QuerySnapshot querySnapshot = await collectionRef
+        .where('Product image', isEqualTo: productImageAddress)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      bool savedState = querySnapshot.docs.first['Product saved'];
+      return savedState;
+    } else {
+      print('No snapshot available');
+      return false;
+    }
+  }
+
+  Future savedStateHandler(CollectionReference subCollectionRef,
+      String productImageAddress, bool isProductSaved) async {
+    QuerySnapshot querySnapshot = await subCollectionRef
+        .where('Product image', isEqualTo: productImageAddress)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      String docID = querySnapshot.docs.first.id;
+
+      await subCollectionRef
+          .doc(docID)
+          .update({'Product saved': isProductSaved});
+      print('Item saved state updated successfully');
+    } else {
+      print('No document fetched from the collection');
+    }
+  }
+
+  Future<void> updateAllProductSavedStatusToFalse(
+      CollectionReference collectionRef) async {
+    try {
+      final querySnapshot = await collectionRef.get();
+
+      for (final docSnapshot in querySnapshot.docs) {
+        final docRef = docSnapshot.reference;
+
+        await docRef.update({
+          'Product saved': false,
+        });
+      }
+      print('All documents updated successfully.');
+    } catch (error) {
+      print('Error updating documents: $error');
+    }
+  }
+
   Future addWishlistItem(String docID, String productImage, String productName,
       double productPrice, String productSize,
       [CollectionReference? subCollectionRef]) async {
@@ -289,7 +344,6 @@ class DatabaseService {
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      // Assuming the field you want to retrieve is called 'shippingFee'
       dynamic item = querySnapshot.docs.first['region'];
       if (item == 'Edo' || item == 'edo') {
         return 1000.00;
@@ -448,5 +502,14 @@ class DatabaseService {
           'OrderFields successfully added to: user_orders -- address: store pick up'));
       ;
     }
+  }
+
+  Future addDonationDetails(String docID, String donator, int donationAmount,
+      bool isAnonymous) async {
+    return await donationCollection.doc(docID).set({
+      'Donator Name': donator,
+      'Donation Amount': donationAmount,
+      'Anonymous': isAnonymous,
+    });
   }
 }

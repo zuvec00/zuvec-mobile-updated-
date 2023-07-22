@@ -21,14 +21,15 @@ import 'cart_page.dart';
 class ProductDetail extends StatefulWidget {
   final String pID;
   final int index;
-  final CollectionReference ratingCollection;
-  final String productImage;
   final String productName;
   final String? productDescription;
   final int productPrice;
   final List? productSizes;
   final List productListImages;
   final Map? productVariants;
+  final String productImage;
+  final CollectionReference productCollectionReference;
+  final CollectionReference ratingCollection;
   final Color backgroundColor;
 
   ProductDetail(
@@ -43,7 +44,8 @@ class ProductDetail extends StatefulWidget {
       required this.backgroundColor,
       this.productVariants,
       required this.ratingCollection,
-      required this.pID});
+      required this.pID,
+      required this.productCollectionReference});
 
   @override
   State<ProductDetail> createState() => _ProductDetailState();
@@ -59,14 +61,15 @@ class _ProductDetailState extends State<ProductDetail> {
   double averageRating = 0;
   double totalRating = 0;
   int totalRaters = 0;
-
   int selectedIndex = 0;
   int noOfItems = 1;
+  bool productSavedState = false;
   PageController _controller = PageController();
 
   @override
   void initState() {
     super.initState();
+    setProductSavedState();
     print(selectedIndex);
     //store the list of images
     productImages = widget.productListImages;
@@ -78,6 +81,14 @@ class _ProductDetailState extends State<ProductDetail> {
 
   Future<void> _handleRefresh() async {
     return await Future.delayed(Duration(seconds: 2));
+  }
+
+  Future<void> setProductSavedState() async {
+    final tempSavedState = await DatabaseService(uID: _getCurrentUserId())
+        .getSavedState(widget.productCollectionReference, widget.productImage);
+    setState(() {
+      productSavedState = tempSavedState;
+    });
   }
 
   void _add2noOfItems() {
@@ -126,6 +137,7 @@ class _ProductDetailState extends State<ProductDetail> {
         cartDocRef.collection('user_cart_item');
 
     bool saved = itemSaved[widget.index];
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -230,26 +242,41 @@ class _ProductDetailState extends State<ProductDetail> {
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: IconButton(
                 onPressed: () {
-                  setState(() {
-                    if ('${widget.pID}${widget.index}' ==
-                        '${widget.pID}${widget.index}') {
-                      print('${widget.pID}${widget.index}');
+                  setState(() async {
+                    if (!productSavedState) {
+                      //print('${widget.pID}${widget.index}');
                       // calls function to switch the saved true or false
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.deepPurple[600]));
+                          });
+                      await DatabaseService(uID: _getCurrentUserId())
+                          .savedStateHandler(widget.productCollectionReference,
+                              widget.productImage, true)
+                          .then((value) => setProductSavedState());
+
                       Provider.of<Model>(context, listen: false)
                           .saveStateHandler(widget.index);
-                      DatabaseService(uID: _getCurrentUserId()).addWishlistItem(
-                          '${widget.pID}${widget.index}',
-                          widget.productImage,
-                          widget.productName,
-                          widget.productVariants == null
-                          ? widget.productPrice.toDouble()
-                          : (widget.productPrice +
-                                  widget.productVariants!['$selectedIndex'][1])
-                              .toDouble(),
-                          widget.productVariants == null
-                              ? widget.productSizes![selectedIndex]
-                              : widget.productVariants!['$selectedIndex'][0],
-                          wishlistSubColleciton);
+                      DatabaseService(uID: _getCurrentUserId())
+                          .addWishlistItem(
+                              '${widget.pID}${widget.index}',
+                              widget.productImage,
+                              widget.productName,
+                              widget.productVariants == null
+                                  ? widget.productPrice.toDouble()
+                                  : (widget.productPrice +
+                                          widget.productVariants![
+                                              '$selectedIndex'][1])
+                                      .toDouble(),
+                              widget.productVariants == null
+                                  ? widget.productSizes![selectedIndex]
+                                  : widget.productVariants!['$selectedIndex']
+                                      [0],
+                              wishlistSubColleciton)
+                          .then((value) => Navigator.pop(context));
                       // calls function to add items to the saved page
                       Provider.of<Model>(context, listen: false).addSavedItem({
                         'productImagePath': widget.productImage,
@@ -259,14 +286,27 @@ class _ProductDetailState extends State<ProductDetail> {
                             ? widget.productSizes![selectedIndex]
                             : widget.productVariants!['$selectedIndex'][0],
                       });
-                    } else if (saved == true) {
+                    } else if (productSavedState) {
                       // calls function to switch the saved true or false
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.deepPurple[600]));
+                          });
+                      await DatabaseService(uID: _getCurrentUserId())
+                          .savedStateHandler(widget.productCollectionReference,
+                              widget.productImage, false)
+                          .then((value) => setProductSavedState());
+
                       Provider.of<Model>(context, listen: false)
                           .saveStateHandler(widget.index);
                       //calls function to remove item from the saved page
                       DatabaseService(uID: _getCurrentUserId())
                           .deleteWishlistItem(wishlistSubColleciton,
-                              '${widget.pID}${widget.index}');
+                              '${widget.pID}${widget.index}')
+                          .then((value) => Navigator.pop(context));
                       Provider.of<Model>(context, listen: false)
                           .removeSavedItem(widget.index);
                     }
@@ -274,10 +314,10 @@ class _ProductDetailState extends State<ProductDetail> {
                   print('Heart icon tapped; route:product details');
                 },
                 icon: Icon(
-                    saved
+                    productSavedState
                         ? FluentSystemIcons.ic_fluent_heart_filled
                         : FluentSystemIcons.ic_fluent_heart_regular,
-                    size: saved ? 34 : 30,
+                    size: productSavedState ? 34 : 30,
                     color: Colors.grey[900]),
               ),
             )
@@ -519,7 +559,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       icon: Icon(Icons.check_box_rounded, color: Colors.white),
                       messageText: Text("Cart successfully updated",
                           style: GoogleFonts.quicksand(color: Colors.white)),
-                    )..show(context)/*.then((_) => 
+                    )..show(context) /*.then((_) => 
                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -538,7 +578,8 @@ class _ProductDetailState extends State<ProductDetail> {
                                   productDescription: widget.productDescription,
                                   productName: widget.productName,
                                   productPrice: widget.productPrice,
-                                )))))*/;
+                                )))))*/
+                        ;
                   },
                   child: MyAddToCartButton()),
               const SizedBox(height: 10),

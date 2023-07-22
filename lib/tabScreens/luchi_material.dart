@@ -75,6 +75,7 @@ class LuchiMaterials extends StatelessWidget {
                                       builder: ((context) => ProductDetail(
                                         pID: 'ankara_material',
                                           index: index,
+                                          productCollectionReference: luchiMaterialsCatalogRef,
                                           ratingCollection: ratingCollection,
                                           backgroundColor: getRandomColor(),
                                           productListImages: streamSnapshot
@@ -95,6 +96,7 @@ class LuchiMaterials extends StatelessWidget {
                             child: MyProductCard(
                               pID:'ankara_material',
                               index: index,
+                              productCollectionReference: luchiMaterialsCatalogRef,
                               ratingCollection: ratingCollection,
                               backgroundColor: getRandomColor(),
                               productName: streamSnapshot.data!.docs[index]

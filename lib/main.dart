@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import 'routes/accountRoutes/wishlist_test.dart';
+import 'routes/accountRoutes/supportDeveloper.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           '/preferences': (context) => Preferences(),
           '/contactSupport': (context) => ContactSupport(),
           '/appRating': (context) => AppRating(),
-          '/wishlist_test':(context)=> WishlistTest()
+          '/supportDeveloper': (context) => SupportDeveloper()
         },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

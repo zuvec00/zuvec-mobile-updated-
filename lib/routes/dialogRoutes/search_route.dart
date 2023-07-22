@@ -105,6 +105,7 @@ class MySearchPage extends StatelessWidget {
                                                   builder: ((context) => ProductDetail(
                                                       pID: productID,
                                                       index: index,
+                                                      productCollectionReference: collection,
                                                       ratingCollection:
                                                           ratingCollection,
                                                       backgroundColor:
@@ -133,6 +134,7 @@ class MySearchPage extends StatelessWidget {
                                           pID: productID,
                                           index: index,
                                           ratingCollection: ratingCollection,
+                                          productCollectionReference: collection,
                                           backgroundColor: getRandomColor(),
                                           productVariants: collectionName ==
                                                   'watchesCatalogFr'
