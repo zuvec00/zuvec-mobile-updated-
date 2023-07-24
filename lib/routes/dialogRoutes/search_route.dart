@@ -74,6 +74,7 @@ class MySearchPage extends StatelessWidget {
                                 color: Colors.deepPurple[600]),
                           );
                         } else if (streamSnapshot.hasData) {
+                          print('Search query length:${streamSnapshot.data!.docs.length},');
                           return SizedBox.expand(
                               child: MasonryGridView.builder(
                                   itemCount: streamSnapshot.data!.docs.length,
