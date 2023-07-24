@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/components/my_containers/my_tabBar_container.dart';
 import 'package:firebase_practice/routes/cart_page.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_practice/tabScreens/watches.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_flushbar/flutter_flushbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +40,7 @@ class _HomeState extends State<Home> {
   late String greeting;
 
   late String category;
+  bool hasInternet = true;
   bool _searchPressed = false;
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
@@ -46,6 +49,7 @@ class _HomeState extends State<Home> {
     'Ready 2 Wear': ['watchesCatalaog', 'ready_2_wear'],
     'Ankara Materials': ['luchiMaterialsCatalog', 'ankara_material'],
     'Watches': ['watchesCatalogFr', 'watches'],
+    'Footwear': ['footwearCatalog','footwear']
   };
 
   String _getCurrentUserId() {
@@ -97,6 +101,8 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
+    checkInternetConnectivity();
+
     setState(() {
       greeting = _getGreeting();
     });
@@ -104,6 +110,31 @@ class _HomeState extends State<Home> {
     setState(() {
       category = widget.category ?? 'Ready 2 Wear';
     });
+  }
+
+  Future<void> checkInternetConnectivity() async {
+    ConnectivityResult connectivityResult =
+        await Connectivity().checkConnectivity();
+
+    print('Connectivity Result: ${ConnectivityResult.values}');
+    if (connectivityResult == ConnectivityResult.none) {
+      print('Connectivity Result: ${ConnectivityResult.none}');
+      setState(() {
+        hasInternet = false;
+      });
+
+      Flushbar(
+        flushbarPosition: FlushbarPosition.TOP,
+        backgroundColor: Colors.red[400]!,
+        margin: const EdgeInsets.only(top: 0),
+        duration: Duration(seconds: 2),
+        icon: Icon(FluentSystemIcons.ic_fluent_wifi_1_filled,
+            color: Colors.white),
+        messageText: Text(
+            "No internet connection. Please check your network settings.",
+            style: GoogleFonts.quicksand(color: Colors.white)),
+      )..show(context);
+    }
   }
 
   @override

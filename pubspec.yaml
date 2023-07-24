@@ -74,6 +74,7 @@ dependencies:
   #hive packages
   hive:
   hive_flutter:
+  connectivity: ^3.0.6
   
 
 dev_dependencies:
