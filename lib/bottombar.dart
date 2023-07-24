@@ -5,7 +5,6 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 
 import 'screens/account.dart';
 import 'screens/home.dart';
-import 'tabScreens/feedTabbars/discover.dart';
 import 'screens/saved.dart';
 
 class MyBottomBar extends StatefulWidget {
@@ -25,7 +24,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
   int currentIndex =  0;
   @override
   Widget build(BuildContext context) {
-    
+
     List<Widget> screenPages = [
       Home(category: widget.category ?? 'Ready 2 Wear'),
       Saved(),
