@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+//import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class Reels extends StatefulWidget {
   final String postVideoUrl;
@@ -23,8 +23,8 @@ class _ReelsState extends State<Reels> {
 
   Future<void> initVideoPlayer() async {
     // Get the cached file using the cache manager
-    FileInfo? fileInfo =
-        await DefaultCacheManager().getFileFromCache(widget.postVideoUrl);
+   // FileInfo? fileInfo =
+        //await DefaultCacheManager().getFileFromCache(widget.postVideoUrl);
 
     // Use the cached file if it exists, otherwise fetch the video
   }

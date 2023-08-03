@@ -76,7 +76,7 @@ class _MyShippingAddressContainerState
       }
     }
 
-    bool addressSelected = widget.selected;
+   // bool addressSelected = widget.selected;
     final size = MediaQuery.of(context).size;
     return Slidable(
         endActionPane: ActionPane(motion: const StretchMotion(), children: [

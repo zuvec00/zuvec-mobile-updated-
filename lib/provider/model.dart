@@ -13,7 +13,6 @@ class Model extends ChangeNotifier {
   final _refUserSavedItems = Hive.box('currentUserSavedItems');
   final _refUserCartItems = Hive.box('currentUserCartItemsNew');
   final _refUserShippingAddress = Hive.box('currentUserShippingAddressDetails');
-  final _refUserOrderHistory = Hive.box('currentUserOrderHistory');
   final _refUserLikedItems = Hive.box('userLikedItems');
 
   //item list
@@ -23,7 +22,6 @@ class Model extends ChangeNotifier {
   List<Map<String, dynamic>> userOrderHistory = [];
   List userLikedItems = [];
   List<bool> functionCalled = [];
-  int _itemQuantity = 1;
   int cartLength = 0;
 
   //delete these list later once you are sure.
@@ -417,8 +415,6 @@ class Model extends ChangeNotifier {
      else {
       return 3500;
     }
-    print('the address im talking bout:$preferredAddress');
-    print('what im looking for:$item');
   }
 
   //function handling adding the order details to the firebase firestore

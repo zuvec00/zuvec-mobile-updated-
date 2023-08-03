@@ -1,9 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_practice/routes/product_details.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_flushbar/flutter_flushbar.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/model.dart';
@@ -68,9 +64,9 @@ class _MyWatchesProductCardState extends State<MyWatchesProductCard>
   }
 
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+   // final size = MediaQuery.of(context).size;
     bool saved = itemSaved[widget.index];
-    final _scaffoldKey = GlobalKey<ScaffoldState>();
+    //final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Container(
         padding: const EdgeInsets.all(10),

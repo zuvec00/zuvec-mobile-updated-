@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/bottombar.dart';
-import 'package:firebase_practice/screens/saved.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flushbar/flutter_flushbar.dart';
@@ -22,7 +21,7 @@ class MyRemoveAllContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    //final size = MediaQuery.of(context).size;
     final DocumentReference wishlistDocumentReference = FirebaseFirestore
         .instance
         .collection('usersWishlistProducts')
@@ -111,7 +110,7 @@ class MyRemoveAllContainer2 extends StatelessWidget {
         .doc(_getCurrentUserId());
     final CollectionReference cartSubCollection =
         cartDocumentRef.collection('user_cart_item');
-    final size = MediaQuery.of(context).size;
+    //final size = MediaQuery.of(context).size;
     return GestureDetector(
         onTap: () {
           DatabaseService(uID: _getCurrentUserId())

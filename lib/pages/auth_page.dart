@@ -2,8 +2,6 @@ import 'package:firebase_practice/bottombar.dart';
 import 'package:firebase_practice/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'login_or_register.dart';
-import 'login_page.dart';
 
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 

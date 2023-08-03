@@ -11,16 +11,13 @@ import 'package:flutter_flushbar/flutter_flushbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../components/my_containers/my_searchBar.dart';
 import '../provider/model.dart';
 import '../routes/dialogRoutes/filter_route.dart';
 import '../routes/dialogRoutes/search_route.dart';
 import '../services/database_service.dart';
-import '../tabScreens/crocs.dart';
 import '../tabScreens/footwear.dart';
 import '../tabScreens/all_luchi.dart';
 import '../tabScreens/luchi_material.dart';
-import '../tabScreens/testtab.dart';
 
 class Home extends StatefulWidget {
   String? firstName;

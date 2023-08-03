@@ -14,8 +14,6 @@ class _MySizedBoxState extends State<MySizedBox> {
   @override
   Widget build(BuildContext context) {
     double ratio =0;
-    double height;
-    double width;
     final size = MediaQuery.of(context).size;
 
     sizedBoxHandler(){

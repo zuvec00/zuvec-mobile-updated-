@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/components/my_containers/my_accountCont.dart';
-import 'package:firebase_practice/pages/onboarding_page.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 
 import 'package:flutter/material.dart';

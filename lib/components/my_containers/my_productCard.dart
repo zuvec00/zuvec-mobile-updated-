@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/routes/product_details.dart';
 import 'package:firebase_practice/services/database_service.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/model.dart';
@@ -84,7 +83,7 @@ class _MyProductCardState extends State<MyProductCard>
   }
 
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    //final size = MediaQuery.of(context).size;
     bool saved = itemSaved[widget.index];
     final DocumentReference wishlistDocRef = FirebaseFirestore.instance
         .collection('usersWishlistProducts')

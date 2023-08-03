@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_practice/bottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_practice/components/my_button.dart';
 import 'package:firebase_practice/components/my_textfield.dart';
 
 import '../components/my_showPassword.dart';
 import '../routes/forgotPassword.dart';
-import '../services/messaging_service.dart';
 
 class LoginPage extends StatefulWidget {
   final Function() onTap;

@@ -5,8 +5,6 @@ import 'package:firebase_practice/components/my_customWidgets/saved_empty.dart';
 import 'package:firebase_practice/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
 import '../components/my_containers/my_deleteAll.dart';
@@ -20,8 +18,6 @@ class Saved extends StatefulWidget {
 }
 
 class _SavedState extends State<Saved> {
-  final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey =
-      GlobalKey<LiquidPullToRefreshState>();
   void initState() {
     super.initState();
     Provider.of<Model>(context, listen: false).refreshSavedItems();
@@ -64,8 +60,6 @@ class _SavedState extends State<Saved> {
       ];
       return colors[random.nextInt(colors.length)];
     }
-
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
