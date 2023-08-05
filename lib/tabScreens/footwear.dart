@@ -3,11 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_practice/routes/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:provider/provider.dart';
 
 import '../components/my_containers/my_productCard.dart';
-import '../provider/model.dart';
-import '../util/productCardredo.dart';
 
 class Sneakers extends StatelessWidget {
   Sneakers({super.key});

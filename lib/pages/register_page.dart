@@ -6,9 +6,9 @@ import 'package:firebase_practice/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_practice/components/my_button.dart';
 import 'package:firebase_practice/components/my_textfield.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
+import '../bottombar.dart';
 import '../provider/model.dart';
 import '../services/messaging_service.dart';
 
@@ -74,15 +74,16 @@ class _RegisterState extends State<Register> {
   }
 
   registerUser(String email, String password) async {
-    //show loading screen
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-              child: CircularProgressIndicator(color: Colors.deepPurple[600]));
-        });
     //try register user
     try {
+      //show loading screen
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+                child:
+                    CircularProgressIndicator(color: Colors.deepPurple[600]));
+          });
       if (passwordController.text.trim() ==
           confirmPasswordController.text.trim()) {
         final response = await FirebaseAuth.instance
@@ -97,24 +98,32 @@ class _RegisterState extends State<Register> {
           firstName: firstNameController.text.trim(),
         );
         //await DatabaseService(uID: uID).createUserWishlistCollection();
-       // await DatabaseService(uID: uID).createUserCartCollection();
+        // await DatabaseService(uID: uID).createUserCartCollection();
         //await DatabaseService(uID: uID).createUserAddressCollection();
-       // await DatabaseService(uID: uID).createUserOrderCollection();
+        // await DatabaseService(uID: uID).createUserOrderCollection();
         await DatabaseService(uID: uID).updateUserData(
             mToken!,
             firstNameController.text,
             lastNameController.text,
             phoneNoController.text,
             emailIDController.text);
+        Navigator.pop(context);
+       await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyBottomBar(),
+            ));
 
         Provider.of<Model>(context, listen: false).itemSavedHandler();
-        Navigator.pop(context);
+        
+        print('code reached here');
       } else {
         //show error message, password do not match
         setState(() {
           errorMessage = 'Password don\'t match';
         });
       }
+
       //pop the loading screen
       Navigator.pop(context);
     } on FirebaseAuthException catch (error) {

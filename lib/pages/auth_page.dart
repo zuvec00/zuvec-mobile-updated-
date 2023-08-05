@@ -2,8 +2,6 @@ import 'package:firebase_practice/bottombar.dart';
 import 'package:firebase_practice/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'login_or_register.dart';
-import 'login_page.dart';
 
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -27,16 +25,21 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
         body: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
-            builder: ((context, snapshot) {
-              //user is signed in
-              if (snapshot.hasData) {
-                print('snapshot data:${snapshot.hasData}');
-                return const MyBottomBar();
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                // User is signed in (including anonymous users)
+                if (snapshot.data != null) {
+                  return const MyBottomBar();
+                }
+                // User NOT signed in (anonymous users or not signed in at all)
+                else {
+                  return OnBoarding();
+                }
+              } else {
+                // Handle other connection states, e.g., waiting or done.
+                // For example, you can return a loading indicator.
+                return CircularProgressIndicator();
               }
-              //user NOT signed in
-              else {
-                return OnBoarding();
-              }
-            })));
+            }));
   }
 }

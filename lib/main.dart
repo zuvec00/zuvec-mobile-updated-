@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
             textTheme: TextTheme(
                 bodyMedium: GoogleFonts.quicksand(
                     fontSize: 16, color: Colors.grey[900]))),
-        home: AuthPage(),
+        home: const AuthPage(),
       ),
     );
   }

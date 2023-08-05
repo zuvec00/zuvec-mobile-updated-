@@ -500,7 +500,7 @@ class DatabaseService {
         'Item Quantities': itemQuantities,
       }).then((success) => print(
           'OrderFields successfully added to: user_orders -- address: store pick up'));
-      ;
+      
     }
   }
 

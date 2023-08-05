@@ -1,13 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/components/my_containers/my_feedContainers.dart';
-import 'package:firebase_practice/components/my_containers/my_savedItemsContainers.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
-import '../../provider/model.dart';
-import '../../routes/cart_page.dart';
 
 class Discover extends StatelessWidget {
   Discover({super.key});

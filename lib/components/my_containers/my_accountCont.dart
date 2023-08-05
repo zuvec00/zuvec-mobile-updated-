@@ -1,6 +1,3 @@
-import 'package:firebase_practice/routes/accountRoutes/appRating.dart';
-import 'package:firebase_practice/routes/accountRoutes/contactSupport.dart';
-import 'package:firebase_practice/routes/accountRoutes/preferences.dart';
 import 'package:flutter/material.dart';
 
 class MyAccountCont extends StatelessWidget {

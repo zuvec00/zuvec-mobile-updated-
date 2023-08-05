@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/routes/order_confirmed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server/gmail.dart';
+//import 'package:mailer/mailer.dart';
+//import 'package:mailer/smtp_server/gmail.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/model.dart';
@@ -53,7 +53,7 @@ class PaystackPayment {
   }
 
   //sendMail
-  sendMail() async {
+  /*sendMail() async {
     String username = 'princeibekwe48@gmail.com';
     String password = 'Hearty.20102004';
 
@@ -70,7 +70,7 @@ class PaystackPayment {
     } on MailerException catch (error) {
       print('message not sent: ${error.toString()}');
     }
-  }
+  }*/
 
   //refernce
   String _getReference() {
