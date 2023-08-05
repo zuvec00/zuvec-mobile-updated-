@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_practice/components/my_button.dart';
 import 'package:firebase_practice/components/my_textfield.dart';
 
+import '../bottombar.dart';
 import '../components/my_showPassword.dart';
 import '../routes/forgotPassword.dart';
 
@@ -51,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       print('User Login error: ${error.code}');
     });
     Navigator.pop(context);
+    Navigator.push(context,MaterialPageRoute(builder: (context) => MyBottomBar(),));
   }
 
   void toggleVisibility() {
@@ -59,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -162,8 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                           GestureDetector(
                             onTap: widget.onTap,
                             child: Text('Register',
-                                style:
-                                    TextStyle(color: Colors.deepPurple[600])),
+                                style: TextStyle(color: Color(0xFF5E35B1))),
                           )
                         ],
                       ),
