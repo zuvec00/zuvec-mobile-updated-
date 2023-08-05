@@ -1,9 +1,9 @@
-import 'package:firebase_practice/pages/login_or_register.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../components/my_containers/my_onboarding.dart';
 import '../util/onborading_details.dart';
+import 'guest_page.dart';
 
 class OnBoarding extends StatefulWidget {
   OnBoarding({super.key});
@@ -94,8 +94,7 @@ class _OnBoardingState extends State<OnBoarding> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: ((context) =>
-                                        const LoginOrRegisterPage())));
+                                    builder: ((context) => const GuestPage())));
                           },
                           child: Text('Get Started',
                               style: TextStyle(
