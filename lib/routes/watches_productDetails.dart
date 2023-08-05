@@ -10,7 +10,6 @@ import '../components/my_containers/my_add2Cart.dart';
 import '../components/my_containers/my_chatWseller.dart';
 import '../components/my_containers/my_productSize.dart';
 import '../components/my_price.dart';
-import '../components/my_ratingBar.dart';
 import '../provider/model.dart';
 import 'cart_page.dart';
 

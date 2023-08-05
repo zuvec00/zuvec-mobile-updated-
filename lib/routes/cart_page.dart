@@ -8,7 +8,6 @@ import 'package:firebase_practice/routes/shippingAddress/shippingAddress_page.da
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,8 +26,6 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey =
-      GlobalKey<LiquidPullToRefreshState>();
   late double totalPrice = 0.0;
 
   @override

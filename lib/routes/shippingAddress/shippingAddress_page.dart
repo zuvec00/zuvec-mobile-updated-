@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flushbar/flutter_flushbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 import '../../components/my_containers/my_shippingAddressContainer.dart';
 import '../../components/my_price.dart';
@@ -119,8 +118,7 @@ class _ShippingAddressPageState extends State<ShippingAddressPage> {
                     width: 20,
                     height: 20,
                     decoration: BoxDecoration(
-                        color:
-                            storePickUp ? Colors.grey[900] : Colors.white,
+                        color: storePickUp ? Colors.grey[900] : Colors.white,
                         shape: BoxShape.circle,
                         border: Border.all(
                             width: storePickUp ? 0.0 : 1.5,
@@ -174,7 +172,7 @@ class _ShippingAddressPageState extends State<ShippingAddressPage> {
                     ],
                   )),
             ),
-            const SizedBox(height:15),
+            const SizedBox(height: 15),
             Text('YOUR ADDRESSES', style: TextStyle(color: Colors.grey[600])),
             Expanded(
                 flex: 5,
@@ -254,9 +252,9 @@ class _ShippingAddressPageState extends State<ShippingAddressPage> {
                                   } else {
                                     double totalPrice = snapshot.data ?? 0.0;
                                     return Price(
-                                        price: totalPrice,
-                                        fontSize: 14,
-                                        );
+                                      price: totalPrice,
+                                      fontSize: 14,
+                                    );
                                   }
                                 },
                               ),
@@ -296,9 +294,9 @@ class _ShippingAddressPageState extends State<ShippingAddressPage> {
                                   } else {
                                     double totalPrice = snapshot.data ?? 0.0;
                                     return Price(
-                                        price: totalPrice+shippingFee,
-                                        fontSize: 14,
-                                        );
+                                      price: totalPrice + shippingFee,
+                                      fontSize: 14,
+                                    );
                                   }
                                 },
                               ),
@@ -341,7 +339,8 @@ class _ShippingAddressPageState extends State<ShippingAddressPage> {
                       duration: const Duration(seconds: 2),
                       icon: const Icon(Icons.error_outline_rounded,
                           color: Colors.white),
-                      messageText: Text("You are only allowed to choose a single shipping address.",
+                      messageText: Text(
+                          "You are only allowed to choose a single shipping address.",
                           style: GoogleFonts.quicksand(color: Colors.white)),
                     )..show(context);
                   } else {

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_practice/bottombar.dart';
 import 'package:firebase_practice/components/my_button.dart';
 import 'package:firebase_practice/pages/login_or_register.dart';
 import 'package:flutter/material.dart';

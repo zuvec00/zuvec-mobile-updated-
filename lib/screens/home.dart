@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, must_be_immutable, unused_field
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
