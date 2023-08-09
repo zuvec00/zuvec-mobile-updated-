@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
     'Ready 2 Wear': ['watchesCatalaog', 'ready_2_wear'],
     'Ankara Materials': ['luchiMaterialsCatalog', 'ankara_material'],
     'Watches': ['watchesCatalogFr', 'watches'],
-    'Footwear': ['footwearCatalog','footwear']
+    'Footwear': ['footwearCatalog', 'footwear']
   };
 
   String _getCurrentUserId() {
@@ -219,9 +219,6 @@ class _HomeState extends State<Home> {
                     print('sth:${size.height}, ${size.width}');
                   },
                   child: Row(children: [
-                    Text('Hello ',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold)),
                     FutureBuilder<String>(
                       future: DatabaseService(uID: _getCurrentUserId())
                           .getUserFirstName(),
@@ -237,7 +234,9 @@ class _HomeState extends State<Home> {
                           return Text('Error: ${snapshot.error}');
                         } else {
                           return Text(
-                            '${snapshot.data},',
+                            snapshot.data == ""
+                                ? "Welcome, Guest"
+                                : 'Hello ${snapshot.data},',
                             style: TextStyle(
                                 color: Colors.grey[900],
                                 fontSize: 22,
