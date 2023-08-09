@@ -11,10 +11,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 import '../components/my_containers/my_cartItemsCont.dart';
 import '../components/my_containers/my_deleteAll.dart';
 import '../components/my_price.dart';
+import '../pages/login_or_register.dart';
 import '../provider/model.dart';
 import '../services/database_service.dart';
 
@@ -46,6 +46,44 @@ class _CartState extends State<Cart> {
     final User currentUser = FirebaseAuth.instance.currentUser!;
     String userID = currentUser.uid;
     return userID;
+  }
+
+  bool isUserAnonymous() {
+    User? user = FirebaseAuth.instance.currentUser;
+    return user != null && user.isAnonymous;
+  }
+
+  void showSignUpPrompt(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Sign Up Required', style: GoogleFonts.quicksand()),
+          content: Text('Please sign up to complete the action.',
+              style: GoogleFonts.quicksand()),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog.
+                Navigator.pop(context);
+              },
+              child: Text('Cancel', style: GoogleFonts.quicksand()),
+            ),
+            TextButton(
+              onPressed: () {
+                // Navigate to the sign-up page.
+                // Implement your navigation logic here.
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginOrRegisterPage())).then((_) => Navigator.pop(context),);
+              },
+              child: Text('Sign Up', style: GoogleFonts.quicksand()),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -125,7 +163,8 @@ class _CartState extends State<Cart> {
                                                   const EdgeInsets.symmetric(
                                                       vertical: 7.50),
                                               child: MyCartItems(
-                                                backgroundColor: getRandomColor(),
+                                                backgroundColor:
+                                                    getRandomColor(),
                                                 productImagePath:
                                                     documentSnapshot[
                                                         'Product image'],
@@ -219,7 +258,6 @@ class _CartState extends State<Cart> {
                                         Text('Total',
                                             style: TextStyle(
                                                 fontSize: 16,
-                                                
                                                 color: Colors.grey[600])),
                                         FutureBuilder<double>(
                                           future: DatabaseService(
@@ -284,11 +322,15 @@ class _CartState extends State<Cart> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) =>
-                                        ShippingAddressPage())));
+                            if (isUserAnonymous()) {
+                              showSignUpPrompt(context);
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          ShippingAddressPage())));
+                            }
                           },
                           child: Container(
                               alignment: Alignment.center,

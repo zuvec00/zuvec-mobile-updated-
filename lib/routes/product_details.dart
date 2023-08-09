@@ -276,85 +276,76 @@ class _ProductDetailState extends State<ProductDetail> {
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: IconButton(
                 onPressed: () {
-                  if (isUserAnonymous()) {
-                    showSignUpPrompt(context);
-                  } else {
-                    setState(() async {
-                      if (!productSavedState) {
-                        //print('${widget.pID}${widget.index}');
-                        // calls function to switch the saved true or false
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.deepPurple[600]));
-                            });
-                        await DatabaseService(uID: _getCurrentUserId())
-                            .savedStateHandler(
-                                widget.productCollectionReference,
-                                widget.productImage,
-                                true)
-                            .then((value) => setProductSavedState());
+                  setState(() async {
+                    if (!productSavedState) {
+                      //print('${widget.pID}${widget.index}');
+                      // calls function to switch the saved true or false
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.deepPurple[600]));
+                          });
+                      await DatabaseService(uID: _getCurrentUserId())
+                          .savedStateHandler(widget.productCollectionReference,
+                              widget.productImage, true)
+                          .then((value) => setProductSavedState());
 
-                        Provider.of<Model>(context, listen: false)
-                            .saveStateHandler(widget.index);
-                        DatabaseService(uID: _getCurrentUserId())
-                            .addWishlistItem(
-                                '${widget.pID}${widget.index}',
-                                widget.productImage,
-                                widget.productName,
-                                widget.productVariants == null
-                                    ? widget.productPrice.toDouble()
-                                    : (widget.productPrice +
-                                            widget.productVariants![
-                                                '$selectedIndex'][1])
-                                        .toDouble(),
-                                widget.productVariants == null
-                                    ? widget.productSizes![selectedIndex]
-                                    : widget.productVariants!['$selectedIndex']
-                                        [0],
-                                wishlistSubColleciton)
-                            .then((value) => Navigator.pop(context));
-                        // calls function to add items to the saved page
-                        Provider.of<Model>(context, listen: false)
-                            .addSavedItem({
-                          'productImagePath': widget.productImage,
-                          'productName': widget.productName,
-                          'productPrice': widget.productPrice.toDouble(),
-                          'productSize': widget.productVariants == null
-                              ? widget.productSizes![selectedIndex]
-                              : widget.productVariants!['$selectedIndex'][0],
-                        });
-                      } else if (productSavedState) {
-                        // calls function to switch the saved true or false
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.deepPurple[600]));
-                            });
-                        await DatabaseService(uID: _getCurrentUserId())
-                            .savedStateHandler(
-                                widget.productCollectionReference,
-                                widget.productImage,
-                                false)
-                            .then((value) => setProductSavedState());
+                      Provider.of<Model>(context, listen: false)
+                          .saveStateHandler(widget.index);
+                      DatabaseService(uID: _getCurrentUserId())
+                          .addWishlistItem(
+                              '${widget.pID}${widget.index}',
+                              widget.productImage,
+                              widget.productName,
+                              widget.productVariants == null
+                                  ? widget.productPrice.toDouble()
+                                  : (widget.productPrice +
+                                          widget.productVariants![
+                                              '$selectedIndex'][1])
+                                      .toDouble(),
+                              widget.productVariants == null
+                                  ? widget.productSizes![selectedIndex]
+                                  : widget.productVariants!['$selectedIndex']
+                                      [0],
+                              wishlistSubColleciton)
+                          .then((value) => Navigator.pop(context));
+                      // calls function to add items to the saved page
+                      Provider.of<Model>(context, listen: false).addSavedItem({
+                        'productImagePath': widget.productImage,
+                        'productName': widget.productName,
+                        'productPrice': widget.productPrice.toDouble(),
+                        'productSize': widget.productVariants == null
+                            ? widget.productSizes![selectedIndex]
+                            : widget.productVariants!['$selectedIndex'][0],
+                      });
+                    } else if (productSavedState) {
+                      // calls function to switch the saved true or false
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.deepPurple[600]));
+                          });
+                      await DatabaseService(uID: _getCurrentUserId())
+                          .savedStateHandler(widget.productCollectionReference,
+                              widget.productImage, false)
+                          .then((value) => setProductSavedState());
 
-                        Provider.of<Model>(context, listen: false)
-                            .saveStateHandler(widget.index);
-                        //calls function to remove item from the saved page
-                        DatabaseService(uID: _getCurrentUserId())
-                            .deleteWishlistItem(wishlistSubColleciton,
-                                '${widget.pID}${widget.index}')
-                            .then((value) => Navigator.pop(context));
-                        Provider.of<Model>(context, listen: false)
-                            .removeSavedItem(widget.index);
-                      }
-                    });
-                    print('Heart icon tapped; route:product details');
-                  }
+                      Provider.of<Model>(context, listen: false)
+                          .saveStateHandler(widget.index);
+                      //calls function to remove item from the saved page
+                      DatabaseService(uID: _getCurrentUserId())
+                          .deleteWishlistItem(wishlistSubColleciton,
+                              '${widget.pID}${widget.index}')
+                          .then((value) => Navigator.pop(context));
+                      Provider.of<Model>(context, listen: false)
+                          .removeSavedItem(widget.index);
+                    }
+                  });
+                  print('Heart icon tapped; route:product details');
                 },
                 icon: Icon(
                     productSavedState
@@ -550,7 +541,14 @@ class _ProductDetailState extends State<ProductDetail> {
                             ),
                           ],
                         ),
-                        MyChatWithSellerButton()
+                        MyChatWithSellerButton(
+                          productName: widget.productName,
+                          productID: '${widget.pID}${widget.index}',
+                          productVariant: widget.productVariants == null
+                              ? widget.productSizes![selectedIndex]
+                              : widget.productVariants!['$selectedIndex'][0],
+                          quantity: noOfItems,
+                        )
                       ],
                     ),
                   ],
@@ -558,56 +556,51 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
               GestureDetector(
                   onTap: () {
-                    if (isUserAnonymous()) {
-                      showSignUpPrompt(context);
-                    } else {
-                      DatabaseService(uID: _getCurrentUserId()).addCartItem(
-                          '${widget.pID}${widget.index}',
-                          widget.productImage,
-                          widget.productName,
-                          widget.productVariants == null
-                              ? widget.productPrice.toDouble()
-                              : (widget.productPrice +
-                                      widget.productVariants!['$selectedIndex']
-                                          [1])
-                                  .toDouble(),
-                          widget.productVariants == null
-                              ? widget.productSizes![selectedIndex]
-                              : widget.productVariants!['$selectedIndex'][0],
-                          noOfItems,
-                          cartSubCollection);
-                      //calls the function to add items to cart
-                      Provider.of<Model>(context, listen: false).addCartItem({
-                        'productImagePath': widget.productImage,
-                        'productName': widget.productName,
-                        'productPrice': widget.productVariants == null
+                    DatabaseService(uID: _getCurrentUserId()).addCartItem(
+                        '${widget.pID}${widget.index}',
+                        widget.productImage,
+                        widget.productName,
+                        widget.productVariants == null
                             ? widget.productPrice.toDouble()
                             : (widget.productPrice +
                                     widget.productVariants!['$selectedIndex']
                                         [1])
                                 .toDouble(),
-                        'productSize': widget.productVariants == null
+                        widget.productVariants == null
                             ? widget.productSizes![selectedIndex]
                             : widget.productVariants!['$selectedIndex'][0],
-                        'productItemQuantity': noOfItems,
-                      });
+                        noOfItems,
+                        cartSubCollection);
+                    //calls the function to add items to cart
+                    Provider.of<Model>(context, listen: false).addCartItem({
+                      'productImagePath': widget.productImage,
+                      'productName': widget.productName,
+                      'productPrice': widget.productVariants == null
+                          ? widget.productPrice.toDouble()
+                          : (widget.productPrice +
+                                  widget.productVariants!['$selectedIndex'][1])
+                              .toDouble(),
+                      'productSize': widget.productVariants == null
+                          ? widget.productSizes![selectedIndex]
+                          : widget.productVariants!['$selectedIndex'][0],
+                      'productItemQuantity': noOfItems,
+                    });
 
-                      //calls the function to update the length of cart
-                      Provider.of<Model>(context, listen: false)
-                          .updateCartItemsLength();
+                    //calls the function to update the length of cart
+                    Provider.of<Model>(context, listen: false)
+                        .updateCartItemsLength();
 
-                      //notifies the user that the cart has been update
-                      // ignore: avoid_single_cascade_in_expression_statements
-                      Flushbar(
-                        flushbarPosition: FlushbarPosition.TOP,
-                        backgroundColor: Colors.green[400]!,
-                        margin: const EdgeInsets.only(top: 0),
-                        duration: Duration(seconds: 1),
-                        icon:
-                            Icon(Icons.check_box_rounded, color: Colors.white),
-                        messageText: Text("Cart successfully updated",
-                            style: GoogleFonts.quicksand(color: Colors.white)),
-                      )..show(context) /*.then((_) => 
+                    //notifies the user that the cart has been update
+                    // ignore: avoid_single_cascade_in_expression_statements
+                    Flushbar(
+                      flushbarPosition: FlushbarPosition.TOP,
+                      backgroundColor: Colors.green[400]!,
+                      margin: const EdgeInsets.only(top: 0),
+                      duration: Duration(seconds: 1),
+                      icon: Icon(Icons.check_box_rounded, color: Colors.white),
+                      messageText: Text("Cart successfully updated",
+                          style: GoogleFonts.quicksand(color: Colors.white)),
+                    )..show(context) /*.then((_) => 
                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -627,8 +620,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                   productName: widget.productName,
                                   productPrice: widget.productPrice,
                                 )))))*/
-                          ;
-                    }
+                        ;
                   },
                   child: MyAddToCartButton()),
               const SizedBox(height: 10),

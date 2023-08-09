@@ -323,7 +323,15 @@ class _WatchesProductDetailState extends State<WatchesProductDetail> {
                                         productBoxes[selectedIndex].toDouble()),
                               ],
                             ),
-                            MyChatWithSellerButton()
+                            /* MyChatWithSellerButton(
+                              productName: widget.productName,
+                              productID: '${widget.product}${widget.index}',
+                              productVariant: widget.productVariants == null
+                                  ? widget.productSizes![selectedIndex]
+                                  : widget.productVariants!['$selectedIndex']
+                                      [0],
+                              quantity: noOfItems,
+                            )*/
                           ],
                         ),
                       ],
